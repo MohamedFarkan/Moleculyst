@@ -1,9 +1,19 @@
+import Index from "@/components/Dashboard";
+import DefaultLayout from "@/components/Layouts/DefaultLayout";
+
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Moleculyst: A research platform for Pharmacologist",
+  description: "The description for moleculyst goes here",
+};
+
 export default function Home() {
   return (
     <>
-      <div className="h-screen">
-        <p>Default Layout</p>
-      </div>
+      <DefaultLayout>
+        <Index />
+      </DefaultLayout>
     </>
   );
 }
