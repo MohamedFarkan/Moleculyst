@@ -9,7 +9,8 @@ import { useUser } from "../context/UserContext";
 const Profile = () => {
   const user = useUser();
 
-  console.log("User data:", user);
+  //console.log("User data:", user);
+  //if (!user) return null;
 
   return (
     <DefaultLayout>
@@ -18,7 +19,7 @@ const Profile = () => {
         <div className="overflow-hidden rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="relative z-20 h-35 md:h-50">
             <Image
-              src={"/images/molecule7.jpg"}
+              src={"/images/molecule3.jpg"}
               alt="profile cover"
               className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
               width={970}
@@ -37,15 +38,19 @@ const Profile = () => {
                 <Image
                   src={user.photo}
                   width={160}
-                  className="rounded-full"
+                  className="h-full w-full rounded-full object-cover"
                   height={160}
+                  // style={{
+                  //   width: "auto",
+                  //   height: "auto",
+                  // }}
                   style={{
-                    width: "auto",
-                    height: "auto",
+                    width: "100%",
+                    height: "100%",
                   }}
                   alt="profile"
                 />
-                <label
+                {/* <label
                   htmlFor="profile"
                   className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
                 >
@@ -56,7 +61,7 @@ const Profile = () => {
                     id="profile"
                     className="sr-only"
                   />
-                </label>
+                </label> */}
               </div>
             </div>
             <div className="mt-4">

@@ -51,6 +51,12 @@ function ChatBox() {
   const handleCreateGroup = async (groupName) => {
     if (groupName && !groups.some((group) => group.name === groupName)) {
       const newGroup = await createGroup(groupName, user_._id);
+      // const newGroup = await createGroup({
+      //   name: groupName,
+      //   createdBy: user_._id,
+      //   members: [user_._id],
+      // });
+
       setGroups([...groups, newGroup]);
       setCurrentGroup(newGroup);
       setMessages([]);
@@ -121,13 +127,20 @@ function ChatBox() {
             <img
               src={message.image || "/default-avatar.png"}
               alt={message.name}
-              className="mr-2 h-8 w-8 rounded-full"
+              className="mr-2 h-7 w-7 rounded-full"
             />
-            <span className="text-sm ">{message.name}</span>
+            <span className="text-gray-600 dark:text-gray-300 text-sm">
+              {message.name}
+            </span>
           </div>
-          <p className="text-xs">{message.data}</p>
-          <span className="text-gray-400 text-xs">
-            {new Date(message.timestamp).toLocaleTimeString()}
+          <p className="mb-1 break-words text-[19px] dark:text-white">
+            {message.data}
+          </p>
+          <span className="text-gray-400 text-[10px]">
+            {new Date(message.timestamp).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </span>
         </div>
       </div>

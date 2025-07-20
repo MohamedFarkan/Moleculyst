@@ -31,7 +31,9 @@ const Header = (props: {
   }, []);
 
   // Hide header if not authenticated
-  if (status !== "authenticated") return null;
+  //if (status !== "authenticated") return null;
+  if (status === "loading" || status !== "authenticated") return null;
+  if (!session?.user) return null;
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-[#121212] dark:drop-shadow-xl">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -100,7 +102,7 @@ const Header = (props: {
           <ul className="flex items-center gap-2 2xsm:gap-4">
             <DropdownMessage />
           </ul>
-          <DarkModeSwitcher /> {/* ✅ Added here */}
+          <DarkModeSwitcher />
           <DropdownUser />
         </div>
       </div>

@@ -18,6 +18,7 @@ import {
   ChevronLeft,
   Icon,
   MenuIcon,
+  TableCellsMerge,
 } from "lucide-react";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { group } from "console";
@@ -50,6 +51,11 @@ const menuGroups = [
         icon: <Microscope size={25} />,
         label: "Research",
         route: "/research",
+      },
+      {
+        icon: <TableCellsMerge size={25} />,
+        label: "Periodic Table",
+        route: "/periodic-table",
       },
       {
         icon: <MessageSquareText size={25} />,

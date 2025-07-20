@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, LogOut, Settings, User2 } from "lucide-react";
 //import { useRouter } from "next/router";
 import { useRouter } from "next/navigation"; // ✅ CORRECT for App Router
@@ -16,13 +16,27 @@ const DropdownUser = () => {
 
   const user = useUser();
 
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = async () => {
     await signOut({ redirect: false });
     router.push("/auth-page/signin");
   };
 
   return (
-    <div>
+    <div className="" ref={dropdownRef}>
       <Link
         onClick={() => {
           setDropdownOpen(!dropdownOpen);
@@ -43,6 +57,7 @@ const DropdownUser = () => {
             src={user.photo}
             style={{ width: "auto", height: "auto" }}
             alt="user"
+            className="rounded-full object-cover"
           />
         </span>
         <ChevronDown />

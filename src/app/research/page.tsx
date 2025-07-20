@@ -93,7 +93,7 @@ export default function PubChem() {
               onChange={(e) => setCompoundName(e.target.value)}
               onKeyDown={handleKeyDown}
               className="border-gray-300 w-full rounded-lg border bg-white p-3 pl-5 text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-96"
-              placeholder="Enter a compound name"
+              placeholder="Compound name"
             />
             <button
               onClick={fetchCompoundData}

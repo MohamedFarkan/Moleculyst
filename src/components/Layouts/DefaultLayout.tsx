@@ -6,7 +6,8 @@ import Sidebar from "@/components/Sidebar";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import Header from "../Header.tsx";
-import { Toaster } from "react-hot-toast"; // ✅ Import Toaster
+import { Toaster } from "react-hot-toast";
+import ChemicalLoader from "@/components/Loader/loader";
 
 export default function DefaultLayout({
   children,
@@ -27,6 +28,7 @@ export default function DefaultLayout({
     "/verify-email",
     "/reset-password",
     "/forget-password",
+    "/periodic-table",
   ];
 
   useLayoutEffect(() => {
@@ -34,6 +36,10 @@ export default function DefaultLayout({
       router.push("/auth-page/signin");
     }
   }, [status, router, pathname]);
+
+  if (status === "loading" || (!session && !publicRoutes.includes(pathname))) {
+    return <ChemicalLoader />;
+  }
 
   return (
     <div className="flex">
