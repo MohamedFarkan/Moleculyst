@@ -1,6 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+//import ChemicalLoader from "@/components/Loader/loader";
+
+//import { useSession } from "next-auth/react";
+//import SignIn from "../auth-page/signin/page";
 
 // The complete elements array with an added 'category' property
 const elements = [
@@ -29,7 +33,7 @@ const elements = [
     number: 3,
     group: 1,
     period: 2,
-    color: "bg-red-500",
+    color: "bg-teal-500",
     name: "Lithium",
     category: "Alkali Metal", // Added category
   },
@@ -102,7 +106,7 @@ const elements = [
     number: 11,
     group: 1,
     period: 3,
-    color: "bg-red-500",
+    color: "bg-teal-500",
     name: "Sodium",
     category: "Alkali Metal", // Added category
   },
@@ -175,7 +179,7 @@ const elements = [
     number: 19,
     group: 1,
     period: 4,
-    color: "bg-red-500",
+    color: "bg-teal-500",
     name: "Potassium",
     category: "Alkali Metal", // Added category
   },
@@ -338,7 +342,7 @@ const elements = [
     number: 37,
     group: 1,
     period: 5,
-    color: "bg-red-500",
+    color: "bg-teal-500",
     name: "Rubidium",
     category: "Alkali Metal", // Added category
   },
@@ -501,7 +505,7 @@ const elements = [
     number: 55,
     group: 1,
     period: 6,
-    color: "bg-red-500",
+    color: "bg-teal-500",
     name: "Caesium",
     category: "Alkali Metal", // Added category
   },
@@ -792,7 +796,7 @@ const elements = [
     number: 87,
     group: 1,
     period: 7,
-    color: "bg-red-500",
+    color: "bg-teal-500",
     name: "Francium",
     category: "Alkali Metal", // Added category
   },
@@ -1080,6 +1084,8 @@ const elements = [
 ];
 
 const PeriodicTable = () => {
+  //const { data: session, status } = useSession();
+
   const [hoveredElement, setHoveredElement] = useState<null | {
     x: number;
     y: number;
@@ -1118,7 +1124,7 @@ const PeriodicTable = () => {
 
   return (
     <DefaultLayout>
-      <div className="bg-gray-900 min-h-screen p-6 text-black dark:text-white">
+      <div className="bg-gray-900 mb-14 min-h-screen p-6 text-black dark:text-white">
         <h1 className="mb-8 text-center text-4xl font-bold">Periodic Table</h1>
 
         {/* --- Filter Section --- */}
@@ -1158,7 +1164,7 @@ const PeriodicTable = () => {
                   gridRowStart: el.period,
                 }}
                 className={`${el.color} transform cursor-pointer rounded px-2 py-3 text-center shadow-md transition-all duration-300
-                  ${isFaded ? "scale-95 opacity-20" : "hover:scale-110"}`}
+                  ${isFaded ? "scale-95 opacity-20" : "hover:scale-110 hover:bg-opacity-100"}`}
               >
                 <div className="text-md font-bold">{el.symbol}</div>
                 <div className="text-xs">{el.number}</div>

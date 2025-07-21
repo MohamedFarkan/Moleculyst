@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import Header from "../Header.tsx";
 import { Toaster } from "react-hot-toast";
-import ChemicalLoader from "@/components/Loader/loader";
+import MainChemicalLoader from "@/components/Loader/MainLoader";
 
 export default function DefaultLayout({
   children,
@@ -29,6 +29,7 @@ export default function DefaultLayout({
     "/reset-password",
     "/forget-password",
     "/periodic-table",
+    "/notes",
   ];
 
   useLayoutEffect(() => {
@@ -38,7 +39,7 @@ export default function DefaultLayout({
   }, [status, router, pathname]);
 
   if (status === "loading" || (!session && !publicRoutes.includes(pathname))) {
-    return <ChemicalLoader />;
+    return <MainChemicalLoader />;
   }
 
   return (
