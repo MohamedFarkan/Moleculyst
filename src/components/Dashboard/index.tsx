@@ -3,7 +3,12 @@ import dynamic from "next/dynamic";
 import React from "react";
 
 import CTACard from "./components/CTACard";
-import { MessageCircle, Network, SearchIcon } from "lucide-react";
+import {
+  MessageCircle,
+  Network,
+  SearchIcon,
+  MessageCircleMore,
+} from "lucide-react";
 import { DiAtom } from "react-icons/di";
 import MolecularWeightCalculator from "./components/MolecularWeightCalculator";
 
@@ -51,7 +56,7 @@ const Index: React.FC = () => {
           title="Collaborative Research"
           url="/message"
         >
-          <MessageCircle className="text-purple-500" />
+          <MessageCircleMore className="text-purple-500" />
         </CTACard>
       </div>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">

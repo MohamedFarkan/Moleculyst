@@ -3,6 +3,7 @@
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import React, { useState } from "react";
 import { DiAtom } from "react-icons/di";
+import { IoSend } from "react-icons/io5";
 
 interface ChatMessage {
   sender: "user" | "ai";
@@ -95,14 +96,14 @@ const ChemistryAIChat: React.FC = () => {
             placeholder="Ask a chemistry question..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="text-gray-900 placeholder:text-gray-500 ring-gray-300 dark:bg-gray-800 dark:placeholder:text-gray-400 dark:ring-gray-700 flex-grow rounded-md bg-white px-4 py-2 shadow-sm outline-none ring-1 transition focus:ring-2 focus:ring-blue-500 dark:text-black"
+            className="text-gray-900 placeholder:text-gray-500 ring-gray-300 dark:bg-gray-800 dark:placeholder:text-gray-400 dark:ring-gray-700 dark:bg-gray-800 flex-grow rounded-md bg-white px-4 py-2 shadow-sm outline-none ring-1 transition focus:ring-2 focus:ring-blue-500 dark:text-black"
           />
 
           <button
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 font-semibold transition hover:bg-blue-700"
           >
-            Send
+            <IoSend size={25} />
           </button>
         </form>
       </div>

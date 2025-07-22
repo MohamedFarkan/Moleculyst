@@ -31,6 +31,8 @@ export default function DefaultLayout({
     "/periodic-table",
     "/notes",
     "/ai-chat",
+    "/compare-panel",
+    "/product-info",
   ];
 
   useLayoutEffect(() => {

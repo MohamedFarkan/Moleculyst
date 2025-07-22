@@ -10,6 +10,7 @@ import SidebarItem from "./SidebarItem";
 
 import {
   LayoutGrid,
+  LayoutDashboard,
   Atom,
   Network,
   Microscope,
@@ -21,8 +22,12 @@ import {
   NotebookPen,
   TableCellsMerge,
   Bot,
+  GitCompareArrows,
 } from "lucide-react";
 import useLocalStorage from "@/hook/useLocalStorage";
+import { SiMoleculer } from "react-icons/si";
+import { BiFoodTag } from "react-icons/bi";
+
 import { group } from "console";
 
 interface SidebarProps {
@@ -35,12 +40,12 @@ const menuGroups = [
     name: "",
     menuItems: [
       {
-        icon: <LayoutGrid size={25} />,
+        icon: <LayoutDashboard size={25} />,
         label: "Dashboard",
         route: "/",
       },
       {
-        icon: <Atom size={25} />,
+        icon: <SiMoleculer size={25} />,
         label: "Molecules Bank",
         route: "/molecule-bank",
       },
@@ -73,6 +78,16 @@ const menuGroups = [
         icon: <Bot size={25} />,
         label: "Ask AI",
         route: "/ai-chat",
+      },
+      {
+        icon: <GitCompareArrows size={25} />,
+        label: "Compare Molecules",
+        route: "/compare-panel",
+      },
+      {
+        icon: <BiFoodTag size={25} />,
+        label: "Products Info",
+        route: "/product-info",
       },
     ],
   },
