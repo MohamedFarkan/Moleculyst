@@ -30,6 +30,7 @@ export default function DefaultLayout({
     "/forget-password",
     "/periodic-table",
     "/notes",
+    "/ai-chat",
   ];
 
   useLayoutEffect(() => {

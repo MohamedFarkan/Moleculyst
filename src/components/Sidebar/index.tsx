@@ -20,6 +20,7 @@ import {
   MenuIcon,
   NotebookPen,
   TableCellsMerge,
+  Bot,
 } from "lucide-react";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { group } from "console";
@@ -68,6 +69,11 @@ const menuGroups = [
         label: "Messages",
         route: "/message",
       },
+      {
+        icon: <Bot size={25} />,
+        label: "Ask AI",
+        route: "/ai-chat",
+      },
     ],
   },
   {
@@ -93,7 +99,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href={"/"}>
-          <div className="flex flex-row items-center justify-center space-x-2">
+          <div className="-ml-5 flex flex-row items-center justify-center space-x-2 ">
             {/* <div className="ml-2 rounded-lg bg-[#3c4fe0] p-1"> */}
             <div className="ml-2 rounded-lg p-1">
               <Image
@@ -105,7 +111,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               />
             </div>
             {/* <p className="mt-4 text-xl font-semibold text-white">Moleculyst</p> */}
-            <p className="mt-4 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-3xl font-extrabold italic tracking-wide text-transparent">
+            <p className=" mt-4 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-3xl font-extrabold italic tracking-wide text-transparent">
               Moleculyst
             </p>
           </div>
@@ -118,7 +124,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <ChevronLeft />
         </button>
       </div>
-      <div className="no-scrollbar -mt-10 flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="scrollbar -mt-10 flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
           {menuGroups.map((group, groupIndex) => (
             <div key={groupIndex}>

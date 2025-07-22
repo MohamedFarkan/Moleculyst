@@ -7,7 +7,7 @@ interface Note {
   id: string;
   title: string;
   description: string;
-  date: number; // Storing date as a number (timestamp)
+  date: number; // timestamp
 }
 
 const Notes: React.FC = () => {
@@ -16,6 +16,10 @@ const Notes: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  // New state to track which note is expanded
+  const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -24,14 +28,15 @@ const Notes: React.FC = () => {
         const parsedNotes: Note[] = JSON.parse(storedNotes);
         setNotes(parsedNotes);
       }
+      setHasLoaded(true);
     }
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && hasLoaded) {
       localStorage.setItem("notes", JSON.stringify(notes));
     }
-  }, [notes]);
+  }, [notes, hasLoaded]);
 
   const addNote = () => {
     if (!title.trim() || !description.trim()) return;
@@ -40,7 +45,7 @@ const Notes: React.FC = () => {
       id: Date.now().toString(),
       title: title.trim(),
       description: description.trim(),
-      date: Date.now(), // Store the current timestamp
+      date: Date.now(),
     };
 
     setNotes([newNote, ...notes]);
@@ -58,7 +63,7 @@ const Notes: React.FC = () => {
             ...note,
             title: title.trim(),
             description: description.trim(),
-            date: Date.now(), // Update the timestamp
+            date: Date.now(),
           }
         : note,
     );
@@ -73,6 +78,9 @@ const Notes: React.FC = () => {
   const deleteNote = (id: string) => {
     const updated = notes.filter((note) => note.id !== id);
     setNotes(updated);
+    if (expandedNoteId === id) {
+      setExpandedNoteId(null);
+    }
   };
 
   const handleEditNote = (note: Note) => {
@@ -105,7 +113,7 @@ const Notes: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="bg-gray-100 dark:bg-gray-900 mx-auto mt-10 min-h-screen max-w-3xl p-6 transition-colors duration-300">
+      <div className="bg-gray-100 dark:bg-gray-900 mx-auto mt-1 min-h-screen max-w-3xl p-6 pl-0 pr-0 transition-colors duration-300">
         <h1 className="mb-8 text-center text-4xl font-bold text-blue-700 dark:text-blue-400">
           My Notes
         </h1>
@@ -165,7 +173,7 @@ const Notes: React.FC = () => {
           </div>
         )}
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
           {notes.length === 0 ? (
             <p className="text-gray-500 dark:text-gray-400 col-span-full text-center">
               No notes yet.
@@ -173,38 +181,60 @@ const Notes: React.FC = () => {
           ) : (
             notes.map((note) => {
               const { formattedDate, formattedTime } = formatDate(note.date);
+              const isExpanded = expandedNoteId === note.id;
+              const shouldShowToggle = note.description.length > 200;
+
               return (
                 <div
                   key={note.id}
-                  className="dark:bg-gray-800 group flex transform flex-col justify-between overflow-hidden rounded-xl bg-white shadow-md transition duration-300 hover:scale-105 hover:shadow-lg"
+                  className="dark:bg-gray-900 dark:shadow-gray-700 group flex min-h-[18rem] min-w-[320px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition duration-300 hover:scale-105 hover:shadow-lg"
                 >
-                  <div className="h-2 w-full rounded-t-lg bg-blue-500 opacity-70 transition-all duration-300 group-hover:opacity-100"></div>
-                  <div className="p-5">
-                    <h2 className="mb-2 text-xl font-semibold text-blue-800 dark:text-blue-400">
+                  <div className="h-2 w-full rounded-t-lg bg-blue-500 opacity-70 transition-all duration-300 group-hover:opacity-100 dark:bg-blue-400"></div>
+
+                  <div className="flex flex-grow flex-col overflow-hidden p-5">
+                    <h2 className="mb-2 text-xl font-semibold text-blue-800 dark:text-blue-300">
                       {note.title}
                     </h2>
-                    <p className="text-gray-700 dark:text-gray-300 mb-4">
+                    <p
+                      className={`text-gray-700 dark:text-gray-300 mb-2 overflow-hidden text-ellipsis ${
+                        isExpanded ? "" : "line-clamp-4"
+                      }`}
+                    >
                       {note.description}
                     </p>
-                    <hr />
-                    <div className="text-gray-500 dark:text-gray-400 mt-4 flex flex-col gap-1 text-sm">
-                      <span>{formattedDate}</span>
-                      <span className="text-gray-400 dark:text-gray-500 font-semibold">
-                        {formattedTime}
-                      </span>
-                      <div className="flex gap-4">
-                        <button
-                          onClick={() => handleEditNote(note)}
-                          className="font-bold text-blue-500 transition hover:text-blue-700 dark:hover:text-blue-400"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => deleteNote(note.id)}
-                          className="font-bold text-[#ef4444] transition hover:text-[#b91c1c] dark:text-[#f87171] dark:hover:text-[#ef4444]"
-                        >
-                          Delete
-                        </button>
+
+                    {shouldShowToggle && (
+                      <button
+                        className="mb-2 w-fit text-sm font-semibold text-indigo-600 hover:underline dark:text-indigo-400"
+                        onClick={() =>
+                          setExpandedNoteId(isExpanded ? null : note.id)
+                        }
+                      >
+                        {isExpanded ? "Show less" : "Read more"}
+                      </button>
+                    )}
+
+                    <div className="mt-auto">
+                      <hr />
+                      <div className="text-gray-500 dark:text-gray-400 mt-4 flex flex-col gap-1 text-sm">
+                        <span>{formattedDate}</span>
+                        <span className="text-gray-400 dark:text-gray-500 font-semibold">
+                          {formattedTime}
+                        </span>
+                        <div className="flex gap-4">
+                          <button
+                            onClick={() => handleEditNote(note)}
+                            className="font-bold text-blue-500 transition hover:text-blue-700 dark:hover:text-blue-400"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => deleteNote(note.id)}
+                            className="font-bold text-[#ef4444] transition hover:text-[#b91c1c] dark:text-[#f87171] dark:hover:text-[#ef4444]"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
