@@ -2,6 +2,8 @@
 
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import React, { useState, useEffect } from "react";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 interface Note {
   id: string;
@@ -216,7 +218,7 @@ const Notes: React.FC = () => {
 
                     <div className="mt-auto">
                       <hr />
-                      <div className="text-gray-500 dark:text-gray-400 mt-4 flex flex-col gap-1 text-sm">
+                      <div className="text-gray-500 dark:text-gray-400 mt-4 flex flex-col gap-1 text-xs">
                         <span>{formattedDate}</span>
                         <span className="text-gray-400 dark:text-gray-500 font-semibold">
                           {formattedTime}
@@ -224,15 +226,15 @@ const Notes: React.FC = () => {
                         <div className="flex gap-4">
                           <button
                             onClick={() => handleEditNote(note)}
-                            className="font-bold text-blue-500 transition hover:text-blue-700 dark:hover:text-blue-400"
+                            className="text-[18px] font-bold text-blue-500 transition hover:text-blue-700 dark:hover:text-blue-400"
                           >
-                            Edit
+                            <FaEdit />
                           </button>
                           <button
                             onClick={() => deleteNote(note.id)}
-                            className="font-bold text-[#ef4444] transition hover:text-[#b91c1c] dark:text-[#f87171] dark:hover:text-[#ef4444]"
+                            className="text-[18px] font-bold text-[#ef4444] transition hover:text-[#b91c1c] dark:text-[#f87171] dark:hover:text-[#ef4444]"
                           >
-                            Delete
+                            <RiDeleteBin5Line />
                           </button>
                         </div>
                       </div>
