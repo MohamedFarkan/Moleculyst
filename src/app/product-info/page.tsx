@@ -154,21 +154,21 @@ const ProductInfoPage = () => {
             }}
             className="dark:bg-gray-800 flex-grow rounded border bg-white px-4 py-2 md:max-w-[50%]"
           />
-          {query && (
-            <button
-              onClick={handleClearSearch}
-              className="bg-gray-300 text-gray-700 hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 rounded px-3 py-2"
-              title="Clear search"
-            >
-              ×
-            </button>
-          )}
           <button
             onClick={handleSearch}
             className="rounded bg-indigo-500 px-4 py-2 text-white hover:bg-indigo-600"
           >
             Search
           </button>
+          {query && (
+            <button
+              onClick={handleClearSearch}
+              className="rounded bg-[#B91C1C] px-4 py-2 text-white hover:bg-[#F87171]"
+              title="Clear search"
+            >
+              Clear
+            </button>
+          )}
         </div>
 
         {product && (

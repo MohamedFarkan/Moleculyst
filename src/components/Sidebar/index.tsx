@@ -120,13 +120,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <Image
                 width={60}
                 height={60}
-                src={"/images/logo/research.png"}
+                src={"/images/logo/logo3.png"}
                 alt="logo"
                 priority
               />
             </div>
             {/* <p className="mt-4 text-xl font-semibold text-white">Moleculyst</p> */}
-            <p className=" mt-4 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-3xl font-extrabold italic tracking-wide text-transparent">
+            <p className="  mt-2 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-3xl font-extrabold italic tracking-wide text-transparent">
               Moleculyst
             </p>
           </div>

@@ -1,36 +1,10 @@
 // data/edibleProducts.ts
 export const edibleProducts = [
   {
-    id: "protein-bar-x",
-    name: "Protein Bar X",
-    brand: "FitFoods",
-    image:
-      "https://m.media-amazon.com/images/I/61F0+o3e7gL._AC_UF894,1000_QL80_.jpg", // Found a representative image for a generic protein bar
-    ingredients: [
-      "Whey Protein Isolate",
-      "Stevia",
-      "Sugar",
-      "Soya Lecithin",
-      "Artificial Flavor",
-    ],
-    nutrition: {
-      calories: 250,
-      totalFat: 8, // grams
-      saturatedFat: 2,
-      cholesterol: 5, // mg
-      sodium: 120, // mg
-      totalCarbohydrate: 20,
-      dietaryFiber: 5,
-      sugars: 8,
-      protein: 20,
-    },
-  },
-  {
     id: "kissan-fruit-jam",
     name: "Fruit Jam",
     brand: "Kissan",
-    image:
-      "https://www.jiomart.com/images/product/original/490000078/kissan-mixed-fruit-jam-500-g-product-images-o490000078-p490000078-0-202305261803.jpg?im=Resize=(1000,1000)", // Kissan Mixed Fruit Jam image
+    image: "/images/products/kissan_jam.jpeg", // Kissan Mixed Fruit Jam image
     ingredients: [
       "Sugar",
       "Fruit Pulp",
@@ -57,8 +31,7 @@ export const edibleProducts = [
     id: "dairy-milk",
     name: "Dairy Milk",
     brand: "Cadbury",
-    image:
-      "https://www.cadbury.co.in/content/dam/sites/india/cadbury_in/products/dairy-milk-chocolate-56g.png", // Direct image from Cadbury India official site
+    image: "/images/products/dairy_milk.jpeg", // Direct image from Cadbury India official site
     ingredients: [
       "Sugar",
       "Milk Solids",
@@ -84,8 +57,7 @@ export const edibleProducts = [
     id: "parle-g-original-gluco-biscuits",
     name: "Parle-G Original Gluco Biscuits",
     brand: "Parle Products",
-    image:
-      "https://www.jiomart.com/images/product/original/490000010/parle-g-original-glucon-biscuits-1-kg-product-images-o490000010-p490000010-0-202306070908.jpg?im=Resize=(1000,1000)", // JioMart image, common reliable source
+    image: "/images/products/parle_g.webp", // JioMart image, common reliable source
     ingredients: [
       "Refined Wheat Flour (Maida)",
       "Sugar",
@@ -114,8 +86,7 @@ export const edibleProducts = [
     id: "britannia-good-day-cashew-cookies",
     name: "Britannia Good Day Cashew Cookies",
     brand: "Britannia Industries",
-    image:
-      "https://m.media-amazon.com/images/I/71D0Y7t3S6L._AC_UF894,1000_QL80_.jpg", // Amazon India image, common reliable source
+    image: "/images/products/good_day.jpeg",
     ingredients: [
       "Refined Wheat Flour (Maida)",
       "Sugar",
@@ -144,8 +115,7 @@ export const edibleProducts = [
     id: "sunfeast-dark-fantasy-choco-fills",
     name: "Sunfeast Dark Fantasy Choco Fills",
     brand: "ITC",
-    image:
-      "https://m.media-amazon.com/images/I/71uK-e6s-EL._AC_UF894,1000_QL80_.jpg", // Amazon India image, common reliable source
+    image: "/images/products/dark_fantasy.jpeg", // Amazon India image, common reliable source
     ingredients: [
       "Choco Crème (Sugar, Refined Palmolein, Refined Palm Oil, Cocoa Solids, Nature Identical Flavoring Substances (Chocolate) and Artificial Flavoring Substances (Vanilla))",
       "Refined Wheat Flour (Maida)",
