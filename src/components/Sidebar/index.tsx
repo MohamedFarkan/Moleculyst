@@ -139,7 +139,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <ChevronLeft />
         </button>
       </div>
-      <div className="scrollbar -mt-10 flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-400 scrollbar-track-transparent  flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
           {menuGroups.map((group, groupIndex) => (
             <div key={groupIndex}>

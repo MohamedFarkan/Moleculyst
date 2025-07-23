@@ -9,12 +9,14 @@ const ProductInfoPage = () => {
   const [product, setProduct] = useState<(typeof edibleProducts)[0] | null>(
     null,
   );
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = () => {
     const found = edibleProducts.find((p) =>
       p.name.toLowerCase().includes(query.toLowerCase()),
     );
     setProduct(found || null);
+    setHasSearched(true);
   };
 
   return (
@@ -46,6 +48,7 @@ const ProductInfoPage = () => {
             <h3 className="text-lg font-bold">{product.name}</h3>
             <p className="text-gray-500 mb-2 text-sm">Brand: {product.brand}</p>
 
+            {/* Ingredients */}
             <h4 className="mb-2 mt-4 font-semibold">Ingredients</h4>
             <ul className="space-y-2">
               {product.ingredients.map((ing) => {
@@ -61,7 +64,7 @@ const ProductInfoPage = () => {
                         className={`text-sm font-semibold ${
                           detail?.status === "safe"
                             ? "text-green-600"
-                            : "text-#ef4444"
+                            : "text-[#ef4444]"
                         }`}
                       >
                         {detail?.status === "safe" ? "✅ Safe" : "⚠️ Harmful"}
@@ -74,7 +77,44 @@ const ProductInfoPage = () => {
                 );
               })}
             </ul>
+
+            {/* Nutrition Table */}
+            {product.nutrition && (
+              <>
+                <h4 className="mb-2 mt-6 font-semibold">Nutrition Facts</h4>
+                <table className="border-gray-300 dark:border-gray-700 w-full table-auto border-collapse border">
+                  <tbody>
+                    {Object.entries(product.nutrition).map(([key, value]) => (
+                      <tr
+                        key={key}
+                        className="border-gray-300 dark:border-gray-700 border-b"
+                      >
+                        <td className="border-gray-300 dark:border-gray-700 border px-3 py-2 font-medium capitalize">
+                          {key
+                            .replace(/([A-Z])/g, " $1") // Add space before caps
+                            .replace(/^./, (str) => str.toUpperCase())}
+                        </td>
+                        <td className="border-gray-300 dark:border-gray-700 border px-3 py-2">
+                          {value}
+                          {key === "cholesterol" || key === "sodium"
+                            ? " mg"
+                            : key === "calories"
+                              ? " kcal"
+                              : " g"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
           </div>
+        )}
+
+        {hasSearched && !product && (
+          <p className="text-red-500 mt-4 text-center font-medium">
+            ❌ No product found matching "{query}"
+          </p>
         )}
       </div>
     </DefaultLayout>
