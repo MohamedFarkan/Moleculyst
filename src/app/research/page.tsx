@@ -47,12 +47,14 @@ export default function PubChem() {
           MolecularFormula: compoundInfo.MolecularFormula,
           MolecularWeight: compoundInfo.MolecularWeight,
           InChIKey: compoundInfo.InChIKey,
-          CanonicalSMILES: compoundInfo.CanonicalSMILES,
-          IsomericSMILES: compoundInfo.IsomericSMILES,
+          // CanonicalSMILES: compoundInfo.CanonicalSMILES,
+          // IsomericSMILES: compoundInfo.IsomericSMILES,
+          CanonicalSMILES: compoundInfo.SMILES,
+          IsomericSMILES: compoundInfo.IsomericSMILES || compoundInfo.SMILES,
           IUPACName: compoundInfo.IUPACName,
           XLogP: compoundInfo.XLogP,
           ExactMass: compoundInfo.ExactMass,
-          MonoisotopicMass: compoundInfo.MonoisotopicMass,
+          MonoisotopicMass: compoundInfo.MsonoisotopicMass,
           TPSA: compoundInfo.TPSA,
           Complexity: compoundInfo.Complexity,
           Charge: compoundInfo.Charge,
@@ -92,7 +94,7 @@ export default function PubChem() {
               value={compoundName}
               onChange={(e) => setCompoundName(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="border-gray-300 w-full rounded-lg border bg-white p-3 pl-5 text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-96"
+              className="border-gray-300 w-[9.5cm] rounded-lg border bg-white p-3 pl-5 text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-96"
               placeholder="Compound name"
             />
             <button

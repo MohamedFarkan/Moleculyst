@@ -9,7 +9,10 @@ const initRDKit = (() => {
   return () => {
     if (!rdkitLoadingPromise) {
       rdkitLoadingPromise = new Promise((resolve, reject) => {
-        initRDKitModule()
+        // initRDKitModule()
+        initRDKitModule({
+          locateFile: (file) => `/wasm/${file}`, // 👈 Tells RDKit where to find the .wasm
+        })
           .then((RDKit) => {
             resolve(RDKit);
           })

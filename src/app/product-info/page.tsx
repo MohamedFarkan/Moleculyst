@@ -147,6 +147,7 @@ const ProductInfoPage = () => {
             placeholder="Search product (e.g., Protein Bar X)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setHasSearched(false)} // 👈 Clear 'no result' message on click
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
@@ -224,42 +225,47 @@ const ProductInfoPage = () => {
               </div>
 
               {/* Nutrition Table Section */}
+              {/* Nutrition Table Section */}
               {product.nutrition && (
                 <div>
                   <h4 className="mb-3 text-lg font-semibold">
                     Nutrition Facts (per 100g/ml)
                   </h4>
-                  <table className="border-gray-300 dark:border-gray-700 w-full table-auto border-collapse border text-sm">
-                    <tbody>
-                      {Object.entries(product.nutrition).map(([key, value]) => {
-                        const { tooltipText, textColorClass } =
-                          getNutritionStatus(key, value);
-                        return (
-                          <tr
-                            key={key}
-                            className="border-gray-200 dark:border-gray-700 border-b last:border-b-0"
-                          >
-                            <td className="border-gray-200 dark:border-gray-700 border-r px-3 py-2 font-medium capitalize">
-                              {key
-                                .replace(/([A-Z])/g, " $1")
-                                .replace(/^./, (str) => str.toUpperCase())}
-                            </td>
-                            <td
-                              className={`px-3 py-2 ${textColorClass}`}
-                              title={tooltipText}
-                            >
-                              {value}{" "}
-                              {key === "cholesterol" || key === "sodium"
-                                ? "mg"
-                                : key === "calories"
-                                  ? "kcal"
-                                  : "g"}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                  <div className="max-h-80 overflow-y-auto pr-2">
+                    <table className="border-gray-300 dark:border-gray-700 w-full table-auto border-collapse border text-sm">
+                      <tbody>
+                        {Object.entries(product.nutrition).map(
+                          ([key, value]) => {
+                            const { tooltipText, textColorClass } =
+                              getNutritionStatus(key, value);
+                            return (
+                              <tr
+                                key={key}
+                                className="border-gray-200 dark:border-gray-700 border-b last:border-b-0"
+                              >
+                                <td className="border-gray-200 dark:border-gray-700 border-r px-3 py-2 font-medium capitalize">
+                                  {key
+                                    .replace(/([A-Z])/g, " $1")
+                                    .replace(/^./, (str) => str.toUpperCase())}
+                                </td>
+                                <td
+                                  className={`px-3 py-2 ${textColorClass}`}
+                                  title={tooltipText}
+                                >
+                                  {value}{" "}
+                                  {key === "cholesterol" || key === "sodium"
+                                    ? "mg"
+                                    : key === "calories"
+                                      ? "kcal"
+                                      : "g"}
+                                </td>
+                              </tr>
+                            );
+                          },
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
             </div>
