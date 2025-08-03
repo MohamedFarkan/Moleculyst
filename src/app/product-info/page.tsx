@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { edibleProducts, ingredientDetails } from "./data";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import SafetyMeter from "./safetyMeter";
 
 // Helper function to determine nutrition status and return styling/tooltip
 const getNutritionStatus = (key: string, value: string | number) => {
@@ -113,6 +114,48 @@ const getNutritionStatus = (key: string, value: string | number) => {
   return { status, tooltipText, textColorClass };
 };
 
+const calculateSafetyRate = (ingredients: string[]) => {
+  const totalIngredients = ingredients.length;
+  if (totalIngredients === 0) {
+    return {
+      total: 0,
+      harmfulCount: 0,
+      safeCount: 0,
+      harmfulPercent: 0,
+      safePercent: 100,
+      safetyScore: 100, // No ingredients means it's perfectly "safe"
+    };
+  }
+
+  let totalHarmfulSeverity = 0;
+  let harmfulCount = 0;
+
+  ingredients.forEach((ing) => {
+    const detail = ingredientDetails[ing];
+    if (detail && detail.status === "harmful") {
+      harmfulCount++;
+      totalHarmfulSeverity += detail.severity;
+    }
+  });
+
+  const averageSeverity = totalHarmfulSeverity / totalIngredients;
+  const maxPossibleSeverity = 10;
+  const safetyScore = 100 - (averageSeverity / maxPossibleSeverity) * 100;
+
+  const safeCount = totalIngredients - harmfulCount;
+  const harmfulPercent = (harmfulCount / totalIngredients) * 100;
+  const safePercent = 100 - harmfulPercent;
+
+  return {
+    total: totalIngredients,
+    harmfulCount,
+    safeCount: safeCount,
+    harmfulPercent: harmfulPercent,
+    safePercent: safePercent,
+    safetyScore: Math.max(0, safetyScore), // Ensures the score is not negative
+  };
+};
+
 const ProductInfoPage = () => {
   const [query, setQuery] = useState("");
   const [product, setProduct] = useState<(typeof edibleProducts)[0] | null>(
@@ -134,6 +177,8 @@ const ProductInfoPage = () => {
     setHasSearched(false);
   };
 
+  const safetyRates = product ? calculateSafetyRate(product.ingredients) : null;
+
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-5xl p-4">
@@ -147,7 +192,7 @@ const ProductInfoPage = () => {
             placeholder="Search product (e.g., Protein Bar X)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => setHasSearched(false)} // 👈 Clear 'no result' message on click
+            onFocus={() => setHasSearched(false)}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
@@ -174,11 +219,19 @@ const ProductInfoPage = () => {
 
         {product && (
           <div className="rounded bg-white p-4 shadow dark:bg-neutral-900">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="mb-4 w-32 rounded-lg object-cover"
-            />
+            <div className="mb-10 flex flex-col items-center justify-between gap-7 px-15 md:flex-row">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-32 rounded-lg object-cover"
+              />
+
+              <SafetyMeter
+                safePercent={safetyRates?.safePercent || 0}
+                harmfulPercent={safetyRates?.harmfulPercent || 0}
+                safetyScore={safetyRates?.safetyScore || 0}
+              />
+            </div>
             <h3 className="text-gray-900 text-2xl font-bold dark:text-white">
               {product.name}
             </h3>
@@ -224,7 +277,6 @@ const ProductInfoPage = () => {
                 </div>
               </div>
 
-              {/* Nutrition Table Section */}
               {/* Nutrition Table Section */}
               {product.nutrition && (
                 <div>

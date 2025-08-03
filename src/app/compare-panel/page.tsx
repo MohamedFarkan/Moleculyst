@@ -20,6 +20,8 @@ type Molecule = {
 
 // Mock data for demo purposes
 const getMoleculeData = (query: string): Molecule | null => {
+  const lower = query.toLowerCase();
+
   const db: Record<string, Molecule> = {
     h2o: {
       name: "Water",
@@ -517,7 +519,14 @@ const getMoleculeData = (query: string): Molecule | null => {
     },
   };
 
-  return db[query.toLowerCase()] || null;
+  if (db[lower]) return db[lower];
+
+  // Fallback: Try name match
+  const matchByName = Object.values(db).find(
+    (mol) => mol.name.toLowerCase() === lower,
+  );
+
+  return matchByName || null;
 };
 
 const MoleculeCompareTable: React.FC = () => {
@@ -533,10 +542,20 @@ const MoleculeCompareTable: React.FC = () => {
   const addInputField = () => setInputs([...inputs, ""]);
 
   const handleSubmit = () => {
-    const found = inputs
-      .map(getMoleculeData)
-      .filter((mol): mol is Molecule => mol !== null);
+    const found: Molecule[] = [];
+    const notFound: string[] = [];
+
+    inputs.forEach((input) => {
+      const result = getMoleculeData(input);
+      if (result) found.push(result);
+      else notFound.push(input);
+    });
+
     setResults(found);
+
+    if (notFound.length > 0) {
+      alert(`These molecules were not found: ${notFound.join(", ")}`);
+    }
   };
 
   return (
@@ -571,6 +590,12 @@ const MoleculeCompareTable: React.FC = () => {
               value={val}
               placeholder="Enter formula or name (e.g. H2O)"
               onChange={(e) => handleInputChange(e.target.value, i)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSubmit();
+                }
+              }}
               style={{
                 padding: "8px",
                 borderRadius: "4px",
@@ -606,6 +631,15 @@ const MoleculeCompareTable: React.FC = () => {
           >
             <GitCompareArrows />
             Compare
+          </button>
+          <button
+            onClick={() => {
+              setInputs(["", ""]);
+              setResults([]);
+            }}
+            className="inline-flex items-center gap-1 rounded bg-[#EF4444] px-4 py-2 text-white hover:bg-[#DC2626]"
+          >
+            Reset
           </button>
         </div>
 
